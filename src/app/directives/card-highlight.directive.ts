@@ -1,0 +1,27 @@
+import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+
+@Directive({
+  selector: '[appCardHighlight]',
+  standalone: true
+})
+export class CardHighlightDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    this.renderer.setStyle(this.el.nativeElement, 'transition', 'box-shadow 0.3s ease');
+  }
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.renderer.setStyle(this.el.nativeElement, 'box-shadow', '0 12px 24px rgba(0,0,0,0.2)');
+    const img = this.el.nativeElement.querySelector('.carousel-img');
+    if (img) {
+      this.renderer.setStyle(img, 'transform', 'scale(1.1)');
+    }
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.renderer.setStyle(this.el.nativeElement, 'box-shadow', '0 4px 12px rgba(0,0,0,0.1)');
+    const img = this.el.nativeElement.querySelector('.carousel-img');
+    if (img) {
+      this.renderer.setStyle(img, 'transform', 'scale(1)');
+    }
+  }
+}

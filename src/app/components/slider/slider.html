@@ -1,0 +1,47 @@
+<div class="carousel-container">
+  
+  <button type="button" class="btn-nav" (click)="handlePrev()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </button>
+
+  <div class="cards-track">
+    @for (item of visibleSlides; track item.title; let i = $index) {
+      <article class="product-card" appCardHighlight>
+        
+        <figure class="card-image-wrapper">
+          <img class="carousel-img" [src]="item.imgUrl" [alt]="item.altText" />
+        </figure>
+        
+        <div class="card-details">
+          <h3 class="product-title">{{ item.title }}</h3>
+          
+          <p class="product-description">
+            @if (expandedItems.has(i)) {
+              {{ item.description }}
+              <button class="expand-btn" (click)="toggleDescription(i)">[less]</button>
+            } @else {
+              {{ item.description | truncateWords:3 }}
+              <button class="expand-btn" (click)="toggleDescription(i)">...</button>
+            }
+          </p>
+
+          <div class="price-container">
+            Total Price: <span class="price-value">{{ item.price | currency }}</span>
+          </div>
+          
+          <app-buy-button [item]="item" (purchase)="onProductBuy($event)"></app-buy-button>
+        </div>
+
+      </article>
+    }
+  </div>
+
+  <button type="button" class="btn-nav" (click)="handleNext()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
+  </button>
+
+</div>
