@@ -1,0 +1,48 @@
+<div class="product-dashboard">
+  
+  <div class="search-container">
+    <input 
+      type="text" 
+      class="search-input" 
+      placeholder="Search for sportswear..." 
+      [(ngModel)]="searchTerm" 
+      (input)="filterProducts()">
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-spinner">Loading products...</div>
+  }
+
+  @if (!isLoading && !errorMessage) {
+    <div class="cards-track">
+      @for (item of filteredProducts; track item.id) {
+        <article class="product-card">
+          <figure class="card-image-wrapper">
+            <img class="carousel-img" [src]="item.imgUrl" [alt]="item.title" />
+          </figure>
+          <div class="card-details">
+            <h3 class="product-title">{{ item.title }}</h3>
+            <p class="product-description">{{ item.description }}</p>
+            <div class="price-container">
+              <span class="price-value">{{ item.price | currency }}</span>
+            </div>
+            
+            <app-buy-button [item]="item" (purchase)="onProductBuy($event)"></app-buy-button>
+            
+            @if (authService.isAdmin$ | async) {
+              <div class="admin-controls">
+                <a [routerLink]="['/edit-product', item.id]" class="btn-edit">Edit</a>
+                <button (click)="deleteProduct(item.id)" class="btn-delete">Delete</button>
+              </div>
+            }
+
+          </div>
+        </article>
+      }
+      
+      @if (filteredProducts.length === 0) {
+        <p class="no-results">No products match your search.</p>
+      }
+    </div>
+  }
+</div>

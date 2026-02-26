@@ -1,14 +1,60 @@
-/* ================================ Global Styles START */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-*, ::before, ::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* LIGHT THEME (Default Variables) */
+:root {
+  --bg-color: #f8f9fa;
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --border-color: #eee;
+  --navbar-bg: #1a1a1a;
+  --navbar-text: #ffffff;
 }
-html {
-  scroll-behavior: smooth;
+
+/* DARK THEME (Overrides) */
+body.dark-theme {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --border-color: #333;
+  --navbar-bg: #000000;
+  --navbar-text: #e0e0e0;
 }
+
+/* Apply variables to core elements */
 body {
-  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-/* ================================ Global Styles END */
+
+/* Force text elements to respect the theme color */
+h1, h2, h3, h4, h5, h6, p, label, span {
+  color: var(--text-color);
+}
+
+/* Make sure the form inputs look good in dark mode */
+input, textarea {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+.product-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
+}
+
+.product-title {
+  color: var(--text-color) !important;
+}
+
+.main-navbar {
+  background-color: var(--navbar-bg) !important;
+  color: var(--navbar-text) !important;
+}
+
+.nav-links a {
+  color: var(--navbar-text) !important;
+}
+
+.nav-links a.active-link {
+  color: var(--text-color) !important;
+}

@@ -1,0 +1,33 @@
+<div class="cart-page">
+  <h2>Your Shopping Cart</h2>
+
+  @if ((cartService.cartCount$ | async) === 0) {
+    <div class="empty-cart">
+      <p>Your cart is empty.</p>
+      <a routerLink="/products" class="continue-btn">Continue Shopping</a>
+    </div>
+  } @else {
+    <div class="cart-items">
+      @for (item of cartService.cart$ | async; track item.product.id) {
+        <div class="cart-item-row">
+          <img [src]="item.product.imgUrl" [alt]="item.product.title" class="cart-img">
+          
+          <div class="item-info">
+            <h3>{{ item.product.title }}</h3>
+            <p class="text-muted">{{ item.product.subtitle }}</p>
+          </div>
+          
+          <div class="item-price">
+            <p>Qty: {{ item.quantity }}</p>
+            <p><strong>{{ (item.product.price * item.quantity) | currency }}</strong></p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="cart-summary">
+      <h3>Total: {{ cartService.cartTotal$ | async | currency }}</h3>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  }
+</div>

@@ -1,1 +1,31 @@
-<app-slider></app-slider>
+<nav class="main-navbar">
+  <div class="logo">RUNNING</div>
+  
+  <div class="nav-links">
+    <div class="nav-pages">
+      <a routerLink="/products" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">All Products</a>
+      
+      @if (authService.isAdmin$ | async) {
+        <a routerLink="/add-product" routerLinkActive="active-link" class="admin-link">➕ Add Product</a>
+      }
+    </div>
+
+    <div class="nav-controls">
+      <a routerLink="/cart" class="cart-link" routerLinkActive="active-link">
+        🛒 Cart ({{ cartService.cartCount$ | async }}) - {{ cartService.cartTotal$ | async | currency }}
+      </a>
+      
+      <button class="icon-btn" (click)="themeService.toggleTheme()" title="Toggle Dark Mode">
+        {{ (themeService.isDarkTheme$ | async) ? '☀️' : '🌙' }}
+      </button>
+      
+      <button class="role-btn" (click)="authService.toggleRole()">
+        {{ (authService.isAdmin$ | async) ? '👮 Admin' : '👤 User' }}
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="content-container">
+  <router-outlet></router-outlet>
+</main>
